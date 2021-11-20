@@ -1,0 +1,83 @@
+/* Variables */
+:root {
+  --primary-color: #bf2630;
+  --secondary-color: #f7f2e7;
+  --border-color: #ffce00;
+  --black-text: #1d1d1d;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins";
+  color: #262626;
+}
+
+html {
+  width: 100%;
+  min-height: 100%;
+  background-color: var(--secondary-color);
+  /* height: 2000px; */
+  position: relative;
+}
+
+body {
+  width: 100%;
+  min-height: 100%;
+}
+
+#root::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  background: url("images/navline.png") no-repeat;
+  z-index: -1;
+  opacity: 0;
+  animation: show 1.3s ease forwards 1s;
+}
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+body::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  background: url("images/texture.jpg") repeat-y;
+  z-index: -1;
+  opacity: 0.2;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+li {
+  list-style-type: none;
+}
+
+.container {
+  max-width: 975px;
+  margin: auto;
+  padding: 0px 20px;
+}
+
+button {
+  border: 0;
+  background-color: transparent;
+}
