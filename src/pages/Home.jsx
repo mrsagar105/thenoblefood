@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NavHome from "../components/NavHome";
 // import Footer from "../components/Footer";
@@ -35,8 +35,12 @@ export default function Home() {
               <PurposeSection>
                 <div>
                   <p>What's your purpose?</p>
-                  <ButtonStyle>I want to donate food</ButtonStyle>
-                  <ButtonStyle>I want to serve people</ButtonStyle>
+                  <Link to="/donate">
+                    <ButtonStyle>I want to donate food</ButtonStyle>
+                  </Link>
+                  <Link to="/serve">
+                    <ButtonStyle>I want to serve people</ButtonStyle>
+                  </Link>
                 </div>
               </PurposeSection>
             </div>

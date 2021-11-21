@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Container } from "../styles/Container.styled";
@@ -6,36 +6,25 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 
 export default function NavHome() {
-  const [showLogin, setShowLogin] = useState(false);
-  const [showSignUp, setShowSignUp] = useState(false);
+  const [user, setUser] = useState({});
 
-  function handleShowLogin() {
-    if (showLogin) {
-      setShowLogin(false);
-    } else {
-      if (showSignUp) {
-        setShowSignUp(false);
-      }
-      setShowLogin(true);
-    }
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      let data = localStorage.getItem("users");
+      data = JSON.parse(data);
+      setUser(data);
+    };
 
-  function handleShowSignUp() {
-    if (showSignUp) {
-      setShowSignUp(false);
-    } else {
-      if (showLogin) {
-        setShowLogin(false);
-      }
-      setShowSignUp(true);
-    }
+    fetchData();
+  }, []);
+
+  function handleLogOut() {
+    localStorage.removeItem("users");
   }
 
   return (
     <NavSection>
       <Container>
-        {showLogin && <Login />}
-        {showSignUp && <SignUp handleShowSignUp={handleShowSignUp} />}
         <Logo src="images/logo.png" alt="Instagram" />
         <NavWrap>
           <nav>
@@ -45,7 +34,7 @@ export default function NavHome() {
             <Link to="/donate" href="#work_section">
               Donate Food
             </Link>
-            <Link to="/" href="#tools_and_skills">
+            <Link to="/serve" href="#tools_and_skills">
               Serve People
             </Link>
             <Link to="/" href="#contact">
@@ -54,28 +43,29 @@ export default function NavHome() {
           </nav>
         </NavWrap>
 
-        <RightButtons>
+        {user ? (
           <Link to="/login">
-            <LoginBtn
-              onClick={() => {
-                handleShowLogin();
-              }}
-            >
-              Login
+            <LoginBtn onClick={handleLogOut}>
+              LogOut
               <img src="images/user.png" alt="" />
             </LoginBtn>
           </Link>
-          <Link to="/signup">
-            <SignUpBtn
-              onClick={() => {
-                handleShowSignUp();
-              }}
-            >
-              Signup
-              <img src="images/fingerprint.png" alt="" />
-            </SignUpBtn>
-          </Link>
-        </RightButtons>
+        ) : (
+          <RightButtons>
+            <Link to="/login">
+              <LoginBtn>
+                Login
+                <img src="images/user.png" alt="" />
+              </LoginBtn>
+            </Link>
+            <Link to="/signup">
+              <SignUpBtn>
+                Signup
+                <img src="images/fingerprint.png" alt="" />
+              </SignUpBtn>
+            </Link>
+          </RightButtons>
+        )}
       </Container>
     </NavSection>
   );

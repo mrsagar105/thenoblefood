@@ -7,6 +7,11 @@ import DonateCards2 from "../components/DonateCards2";
 export default function Donate() {
   const [cards1, showCards1] = useState(true);
   const [cards2, showCards2] = useState(false);
+  const [chapati, setChapati] = useState(false);
+  const [rice, setRice] = useState(false);
+  const [dal, setDal] = useState(false);
+  const [vegetables, setVegetables] = useState(false);
+  const [others, setOthers] = useState(false);
 
   const handleCards = () => {
     showCards1(false);
@@ -29,44 +34,59 @@ export default function Donate() {
               </div>
               {cards1 && (
                 <Cards1>
-                  <Card>
+                  <Card1>
                     <img src="images/chapati.png" alt="" />
                     <div>
                       <p>No. of Chapati</p>
-                      <input type="number" />
+                      <input
+                        type="number"
+                        onChange={(e) => setChapati(e.target.value)}
+                      />
                     </div>
-                  </Card>
-                  <Card>
+                  </Card1>
+                  <Card2>
                     <img src="images/rice.png" alt="" />
                     <div>
                       <p>Rice (Kg)</p>
-                      <input type="number" />{" "}
+                      <input
+                        type="number"
+                        onChange={(e) => setRice(e.target.value)}
+                      />{" "}
                     </div>
-                  </Card>
-                  <Card>
+                  </Card2>
+                  <Card3>
                     <img src="images/dal.png" alt="" />
                     <div>
                       <p>Dal (L)</p>
-                      <input type="number" />{" "}
+                      <input
+                        type="number"
+                        onChange={(e) => setDal(e.target.value)}
+                      />{" "}
                     </div>
-                  </Card>
-                  <Card>
+                  </Card3>
+                  <Card4>
                     <img src="images/vegetables.png" alt="" />
 
                     <div>
                       {" "}
                       <p>Vegetables (Kg)</p>
-                      <input type="number" />{" "}
+                      <input
+                        type="number"
+                        onChange={(e) => setVegetables(e.target.value)}
+                      />{" "}
                     </div>
-                  </Card>
-                  <Card>
+                  </Card4>
+                  <Card5>
                     <img src="images/others.png" alt="" />
                     <div>
                       {" "}
                       <p>Others (Kg)</p>
-                      <input type="number" />{" "}
+                      <input
+                        type="number"
+                        onChange={(e) => setOthers(e.target.value)}
+                      />{" "}
                     </div>
-                  </Card>
+                  </Card5>
                 </Cards1>
               )}
 
@@ -247,35 +267,72 @@ const Cards1 = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   grid-auto-rows: auto;
   grid-gap: 20px;
+
+  // card
+  & > div {
+    background-color: white;
+    border-radius: 35px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+
+    img {
+      width: 120px;
+    }
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    input {
+      border: 0;
+      border-bottom: 2px solid black;
+      text-align: center;
+      width: 100%;
+    }
+
+    input:focus {
+      outline: none;
+    }
+  }
 `;
 
-const Card = styled.div`
-  background-color: white;
-  border-radius: 35px;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 20px;
+const Card1 = styled.div`
+  position: relative;
+  top: 100px;
+  animation: slideup 0.5s ease forwards;
+`;
 
-  img {
-    width: 120px;
-  }
+const Card2 = styled.div`
+  position: relative;
+  top: 100px;
+  animation: slideup 0.5s ease forwards;
+`;
+const Card3 = styled.div`
+  position: relative;
+  top: 100px;
+  animation: slideup 0.5s ease forwards 0.1s;
+`;
+const Card4 = styled.div`
+  position: relative;
+  top: 100px;
+  animation: slideup 0.5s ease forwards 0.15s;
+`;
+const Card5 = styled.div`
+  position: relative;
+  top: 100px;
+  animation: slideup 0.5s ease forwards 0.2s;
 
-  & > div {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  input {
-    border: 0;
-    border-bottom: 2px solid black;
-    text-align: center;
-    width: 100%;
-  }
-
-  input:focus {
-    outline: none;
+  @keyframes slideup {
+    0% {
+      top: 100px;
+    }
+    100% {
+      top: 0px;
+    }
   }
 `;

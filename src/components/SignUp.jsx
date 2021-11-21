@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { Container } from "../styles/Container.styled";
+import axios from "axios";
 
 export default function SignUp() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNo, setPhoneNo] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:8800/api/auth/register", {
+        name,
+        email,
+        phoneNumber: phoneNo,
+        password,
+      });
+
+      navigate(-1);
+    } catch (err) {
+      alert("Cannot register");
+    }
+  };
+
   let navigate = useNavigate();
   return (
     <>
@@ -34,20 +56,40 @@ export default function SignUp() {
             </Heading>
             <MyForm>
               <div>
-                <input type="text" placeholder="Your Name" id="name" />
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  id="name"
+                  onChange={(e) => setName(e.target.value)}
+                />
               </div>
               <div>
-                <input type="text" placeholder="Email" id="image" />
+                <input
+                  type="text"
+                  placeholder="Email"
+                  id="image"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
               <div>
-                <input type="text" placeholder="Phone No" id="image" />
+                <input
+                  type="text"
+                  placeholder="Phone No"
+                  id="image"
+                  onChange={(e) => setPhoneNo(e.target.value)}
+                />
               </div>
               <div>
-                <input type="text" placeholder="Password" id="image" />
+                <input
+                  type="text"
+                  placeholder="Password"
+                  id="image"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </div>
             </MyForm>
 
-            <SignUpBtn class="add_button" onclick="addProduct()">
+            <SignUpBtn class="add_button" onClick={handleSubmit}>
               Sign Up
             </SignUpBtn>
           </RightSection>
@@ -272,9 +314,14 @@ const Cross = styled.button`
   top: 20px;
   right: 20px;
   cursor: pointer;
+  transition: all 0.3s ease;
 
   img {
     height: 40px;
+  }
+
+  &:hover {
+    transform: rotate(90deg);
   }
 `;
 

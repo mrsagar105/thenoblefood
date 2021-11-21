@@ -4,77 +4,166 @@ import styled from "styled-components";
 export default function DonateCards2() {
   return (
     <>
-      <Cards2>
-        <Card>
-          <img src="images/chapati.png" alt="" />
+      <Wrap>
+        <Cards2>
+          <h3>Is food raw or cooked?</h3>
           <div>
-            <p>Raw</p>
-            <input type="checkbox" />
+            <Card1>
+              <img src="images/raw.png" alt="" />
+              <div>
+                <p>Raw</p>
+                <input type="checkbox" />
+              </div>
+            </Card1>
+            <Card2>
+              <img src="images/cooked.png" alt="" />
+              <div>
+                <p>Cooked</p>
+                <input type="checkbox" />{" "}
+              </div>
+            </Card2>
           </div>
-        </Card>
-        <Card>
-          <img src="images/rice.png" alt="" />
+        </Cards2>
+        <Cards2>
+          <h3>Is food veg or non-veg?</h3>
           <div>
-            <p>Cooked</p>
-            <input type="checkbox" />{" "}
-          </div>
-        </Card>
-        <Card>
-          <img src="images/dal.png" alt="" />
-          <div>
-            <p>Veg</p>
-            <input type="checkbox" />{" "}
-          </div>
-        </Card>
-        <Card>
-          <img src="images/vegetables.png" alt="" />
+            <Card3>
+              <img src="images/vegetables.png" alt="" />
+              <div>
+                <p>Veg</p>
+                <input type="checkbox" />{" "}
+              </div>
+            </Card3>
+            <Card4>
+              <img src="images/non-veg.png" alt="" />
 
-          <div>
-            {" "}
-            <p>Non Veg</p>
-            <input type="checkbox" />{" "}
+              <div>
+                {" "}
+                <p>Non Veg</p>
+                <input type="checkbox" />{" "}
+              </div>
+            </Card4>
           </div>
-        </Card>
-      </Cards2>
+        </Cards2>
+      </Wrap>
     </>
   );
 }
 
-const Cards2 = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  grid-auto-rows: auto;
-  grid-gap: 20px;
+const Wrap = styled.div`
+  width: 80%;
+  display: flex;
+
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
 `;
 
-const Card = styled.div`
-  background-color: white;
-  border-radius: 35px;
-  padding: 20px;
+const Cards2 = styled.div`
+  width: 80%;
   display: flex;
-  align-items: center;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   gap: 20px;
 
-  img {
-    width: 120px;
-  }
-
-  & > div {
+  > div {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-auto-rows: auto;
+    grid-gap: 20px;
 
-  input {
-    border: 0;
-    border-bottom: 2px solid black;
-    text-align: center;
-    width: 100%;
-  }
+    > div {
+      background-color: white;
+      border-radius: 35px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 20px;
 
-  input:focus {
-    outline: none;
+      img {
+        width: 120px;
+      }
+
+      & > div {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      input {
+        border: 0;
+        border-bottom: 2px solid black;
+        text-align: center;
+        width: 100%;
+      }
+
+      input:focus {
+        outline: none;
+      }
+    }
+  }
+`;
+
+// const Card = styled.div`
+//   background-color: white;
+//   border-radius: 35px;
+//   padding: 20px;
+//   display: flex;
+//   align-items: center;
+//   flex-direction: column;
+//   gap: 20px;
+
+//   img {
+//     width: 120px;
+//   }
+
+//   & > div {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 5px;
+//   }
+
+//   input {
+//     border: 0;
+//     border-bottom: 2px solid black;
+//     text-align: center;
+//     width: 100%;
+//   }
+
+//   input:focus {
+//     outline: none;
+//   }
+// `;
+
+const Card1 = styled.div`
+  position: relative;
+  top: 100px;
+  animation: slideup 0.5s ease forwards;
+`;
+
+const Card2 = styled.div`
+  position: relative;
+  top: 100px;
+  animation: slideup 0.5s ease forwards;
+`;
+const Card3 = styled.div`
+  position: relative;
+  top: 100px;
+  animation: slideup 0.5s ease forwards 0.1s;
+`;
+const Card4 = styled.div`
+  position: relative;
+  top: 100px;
+  animation: slideup 0.5s ease forwards 0.15s;
+
+  @keyframes slideup {
+    0% {
+      top: 100px;
+    }
+    100% {
+      top: 0px;
+    }
   }
 `;

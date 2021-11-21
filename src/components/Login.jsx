@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { Container } from "../styles/Container.styled";
+import axios from "axios";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      let res = await axios.post("http://localhost:8800/api/auth/login", {
+        email,
+        password,
+      });
+      localStorage.setItem("users", JSON.stringify(res.data));
+      navigate(-1);
+    } catch (err) {
+      alert("Cannot register: ", err);
+    }
+  };
+
   let navigate = useNavigate();
   return (
     <>
@@ -34,14 +52,24 @@ export default function Login() {
             </Heading>
             <MyForm>
               <div>
-                <input type="text" placeholder="Email" id="image" />
+                <input
+                  type="text"
+                  placeholder="Email"
+                  id="image"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
               <div>
-                <input type="text" placeholder="Password" id="image" />
+                <input
+                  type="text"
+                  placeholder="Password"
+                  id="image"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </div>
             </MyForm>
 
-            <SignUpBtn class="add_button" onclick="addProduct()">
+            <SignUpBtn class="add_button" onClick={handleSubmit}>
               Log In
             </SignUpBtn>
           </RightSection>
@@ -266,9 +294,14 @@ const Cross = styled.button`
   top: 20px;
   right: 20px;
   cursor: pointer;
+  transition: all 0.3s ease;
 
   img {
     height: 40px;
+  }
+
+  &:hover {
+    transform: rotate(90deg);
   }
 `;
 
