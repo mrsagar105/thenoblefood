@@ -2,23 +2,58 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import { Container } from "../styles/Container.styled";
-import { Link } from "react-router-dom";
 import axios from "axios";
 
-export default function Serve() {
+export default function OrderDetails() {
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let data = localStorage.getItem("users");
+      data = JSON.parse(data);
+      setUser(data);
+    };
+
+    fetchData();
+  }, []);
+
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
       // fetching post that mahima is following
       const res = await axios.get(
-        "https://hackathon-masai.herokuapp.com/orders"
+        "https://hackathon-masai.herokuapp.com/orders/"
       );
       setOrders(res.data);
       console.log(res.data);
     };
     fetchPosts();
   }, []);
+
+  function allDonations() {
+    const fetchPosts = async () => {
+      // fetching post that mahima is following
+      const res = await axios.get(
+        "https://hackathon-masai.herokuapp.com/orders/"
+      );
+      setOrders(res.data);
+      console.log(res.data);
+    };
+    fetchPosts();
+  }
+
+  function activeDonations() {
+    const fetchPosts = async () => {
+      // fetching post that mahima is following
+      const res = await axios.get(
+        `https://hackathon-masai.herokuapp.com/orders/user/${user._id}`
+      );
+      setOrders(res.data);
+      console.log(res.data);
+    };
+    fetchPosts();
+  }
 
   return (
     <>
@@ -32,7 +67,7 @@ export default function Serve() {
             <div>
               <div>
                 <h2>
-                  Foods ready <span> to be served</span> in your area
+                  Order <span> Details</span>
                 </h2>
               </div>
 
@@ -62,9 +97,6 @@ export default function Serve() {
                       <p>7km</p>
                       <p>{order.isVeg ? "Veg" : "NonVeg"}</p>
                     </BottomDetail>
-                    <Link to="/dashboard">
-                      <ButtonStyle>Serve</ButtonStyle>
-                    </Link>
                   </Card>
                 ))}
               </Cards1>
@@ -121,7 +153,6 @@ const Content = styled.div`
     justify-content: center;
     text-align: center;
     gap: 80px;
-    min-height: calc(100vh - 90px);
   }
 
   h2 {
@@ -210,20 +241,18 @@ const ButtonStyle = styled.button`
 
 const Cards1 = styled.div`
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  grid-auto-rows: auto;
-  grid-gap: 25px;
-  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 `;
 
 const Card = styled.div`
+  width: 100%;
   background-color: white;
   border-radius: 35px;
-  padding: 20px;
+  padding: 40px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   flex-direction: column;
   gap: 20px;
   box-shadow: 0px 4px 4px 0px rgb(0, 0, 0, 0.2);
@@ -260,6 +289,85 @@ const Card = styled.div`
   }
 `;
 
+const DashBtn = styled.div`
+  max-width: 400px;
+  background-color: var(--primary-color);
+  border-radius: 35px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 4px 4px 0px rgb(0, 0, 0, 0.2);
+  transition: all 0.5s ease;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0px 4px 8px 0px rgb(0, 0, 0, 0.2);
+  }
+
+  img {
+    width: 120px;
+  }
+  h3 {
+    font-size: 23px;
+    font-weight: 500;
+    color: white;
+  }
+`;
+const TopBtns = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
+const DashBtn1 = styled.div`
+  max-width: 400px;
+  background-color: #e4d877;
+
+  border-radius: 35px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 4px 4px 0px rgb(0, 0, 0, 0.2);
+  transition: all 0.5s ease;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0px 4px 8px 0px rgb(0, 0, 0, 0.2);
+  }
+
+  img {
+    width: 120px;
+  }
+  h3 {
+    font-size: 23px;
+    font-weight: 500;
+    color: black;
+  }
+`;
+const DashBtn2 = styled.div`
+  max-width: 400px;
+  background-color: white;
+  border-radius: 35px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 4px 4px 0px rgb(0, 0, 0, 0.2);
+  transition: all 0.5s ease;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0px 4px 8px 0px rgb(0, 0, 0, 0.2);
+  }
+
+  img {
+    width: 120px;
+  }
+  h3 {
+    font-size: 23px;
+    font-weight: 500;
+    color: black;
+  }
+`;
+
 const FoodDetails = styled.div`
   display: flex;
   flex-direction: column;
@@ -267,7 +375,7 @@ const FoodDetails = styled.div`
   font-size: 18px;
   font-weight: 500;
   margin-top: 20px;
-  width: 100%;
+  width: 40%;
 
   div {
     display: flex;
@@ -287,6 +395,7 @@ const BottomDetail = styled.div`
   justify-content: space-between;
   width: 100%;
   margin-top: 10px;
+  width: 40%;
 
   p {
     color: var(--primary-color);
