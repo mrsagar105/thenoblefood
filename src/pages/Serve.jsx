@@ -42,27 +42,25 @@ export default function Serve() {
                 <Card>
                   <img src="images/vegetables.png" alt="" />
                   <h3>
-                    Meals for 2 people by <span>Sagar</span>
+                    Meals for 5 people by <span>MD Ali</span>
                   </h3>
                   <FoodDetails>
                     <div>
                       <p>Chapati</p>
-                      <p>5</p>
+                      <p>12</p>
                     </div>
                     <div>
                       <p>Rice</p>
-                      <p>2kg</p>
+                      <p>3kg</p>
                     </div>
                     <div>
                       <p>Location</p>
-                      <Address>
-                        5 Block, Krishna Nagar, Mul Road, Chandrapur
-                      </Address>
+                      <Address>32 Patna city, Patna</Address>
                     </div>
                   </FoodDetails>
                   <BottomDetail>
                     <p>raw</p>
-                    <p>2km</p>
+                    <p>7km</p>
                     <p>veg</p>
                   </BottomDetail>
                   <ButtonStyle>Serve</ButtonStyle>

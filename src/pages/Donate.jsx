@@ -110,7 +110,7 @@ export default function Donate() {
         currentLocation: address,
         userId: userId,
       };
-      axios.post(`http://localhost:8800/api/orders/`, data);
+      axios.post(`https://hackathon-masai.herokuapp.com/orders/`, data);
       navigate("/");
     }
   };

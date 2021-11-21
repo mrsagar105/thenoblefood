@@ -48,8 +48,8 @@ export default function Navbar() {
             <Link to="/serve" href="#tools_and_skills">
               Serve People
             </Link>
-            <Link to="/" href="#contact">
-              Contact
+            <Link to="/dashboard" href="#contact">
+              Dashboard
             </Link>
           </nav>
         </NavWrap>

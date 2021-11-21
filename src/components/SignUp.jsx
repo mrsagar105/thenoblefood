@@ -13,7 +13,7 @@ export default function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8800/api/auth/register", {
+      await axios.post("https://hackathon-masai.herokuapp.com/register", {
         name,
         email,
         phoneNumber: phoneNo,

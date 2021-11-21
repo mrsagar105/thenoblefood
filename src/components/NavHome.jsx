@@ -38,7 +38,7 @@ export default function NavHome() {
               Serve People
             </Link>
             <Link to="/" href="#contact">
-              Contact
+              Dashboard
             </Link>
           </nav>
         </NavWrap>

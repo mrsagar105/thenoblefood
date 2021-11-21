@@ -11,10 +11,13 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let res = await axios.post("http://localhost:8800/api/auth/login", {
-        email,
-        password,
-      });
+      let res = await axios.post(
+        "https://hackathon-masai.herokuapp.com/login",
+        {
+          email,
+          password,
+        }
+      );
       localStorage.setItem("users", JSON.stringify(res.data));
       navigate(-1);
     } catch (err) {
