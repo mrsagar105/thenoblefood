@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
-export default function DonateCards2() {
+export default function DonateCards2({ setRaw, setCooked, setVeg, setNonveg }) {
   return (
     <>
       <Wrap>
@@ -12,14 +12,20 @@ export default function DonateCards2() {
               <img src="images/raw.png" alt="" />
               <div>
                 <p>Raw</p>
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  onChange={(e) => setRaw(e.target.checked)}
+                />
               </div>
             </Card1>
             <Card2>
               <img src="images/cooked.png" alt="" />
               <div>
                 <p>Cooked</p>
-                <input type="checkbox" />{" "}
+                <input
+                  type="checkbox"
+                  onChange={(e) => setCooked(e.target.checked)}
+                />{" "}
               </div>
             </Card2>
           </div>
@@ -31,7 +37,10 @@ export default function DonateCards2() {
               <img src="images/vegetables.png" alt="" />
               <div>
                 <p>Veg</p>
-                <input type="checkbox" />{" "}
+                <input
+                  type="checkbox"
+                  onChange={(e) => setVeg(e.target.checked)}
+                />{" "}
               </div>
             </Card3>
             <Card4>
@@ -40,7 +49,10 @@ export default function DonateCards2() {
               <div>
                 {" "}
                 <p>Non Veg</p>
-                <input type="checkbox" />{" "}
+                <input
+                  type="checkbox"
+                  onChange={(e) => setNonveg(e.target.checked)}
+                />{" "}
               </div>
             </Card4>
           </div>

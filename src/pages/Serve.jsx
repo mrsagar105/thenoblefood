@@ -5,6 +5,23 @@ import { Container } from "../styles/Container.styled";
 import DonateCards2 from "../components/DonateCards2";
 
 export default function Serve() {
+  // useEffect(() => {
+  //   const fetchPost = async () => {
+  //     const res = await axios.get(`http://localhost:8800/api/posts/${postId}`);
+  //     const userIds = res.data.likes;
+
+  //     for (let i = 0; i < userIds.length; i++) {
+  //       // Perform asynchronous actions and await them, it will work
+  //       const response = await axios.get(
+  //         `http://localhost:8800/api/users/${userIds[i]}`
+  //       );
+  //       users.push(response.data);
+  //     }
+  //     setLikedBy(users);
+  //   };
+  //   fetchPost();
+  // }, []);
+
   return (
     <>
       <Navbar />
@@ -221,7 +238,7 @@ const HeroSection = styled.div`
     bottom: 0;
     right: 0;
     z-index: 0;
-    animation: moveFromLeft 1s ease forwards 1.5s;
+    animation: moveFromLeft 1s ease forwards;
 
     @keyframes moveFromLeft {
       0% {

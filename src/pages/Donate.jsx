@@ -3,19 +3,116 @@ import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import { Container } from "../styles/Container.styled";
 import DonateCards2 from "../components/DonateCards2";
+import DonateCards3 from "../components/DonateCards3";
+import Geocode from "react-geocode";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Donate() {
   const [cards1, showCards1] = useState(true);
   const [cards2, showCards2] = useState(false);
+  const [cards3, showCards3] = useState(false);
   const [chapati, setChapati] = useState(false);
   const [rice, setRice] = useState(false);
   const [dal, setDal] = useState(false);
   const [vegetables, setVegetables] = useState(false);
   const [others, setOthers] = useState(false);
 
+  const [raw, setRaw] = useState(false);
+  const [cooked, setCooked] = useState(false);
+  const [veg, setVeg] = useState(false);
+  const [nonveg, setNonveg] = useState(false);
+
+  const [location, setLocation] = useState(false);
+
+  const [lat, setLat] = useState(null);
+  const [lng, setLng] = useState(null);
+  const [status, setStatus] = useState(null);
+  const [address, setAddress] = useState(null);
+
+  const [food1, setFood1] = useState({});
+  const [food2, setFood2] = useState({});
+
+  let navigate = useNavigate();
+
+  const handleGeoLoaction = () => {
+    Geocode.setApiKey("AIzaSyCgdmJK-8o0EalNmY0EQHsoae4J797WVK0");
+    Geocode.enableDebug();
+
+    Geocode.fromLatLng(lat, lng).then(
+      (response) => {
+        const address = response.results[0].formatted_address;
+        setAddress(address);
+        console.log(address);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  };
+
+  const getLocation = () => {
+    if (!navigator.geolocation) {
+      setStatus("Geolocation is not supported by your browser");
+    } else {
+      setStatus("Locating...");
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setStatus(null);
+          setLat(position.coords.latitude);
+          setLng(position.coords.longitude);
+        },
+        () => {
+          setStatus("Unable to retrieve your location");
+        }
+      );
+      handleGeoLoaction();
+    }
+  };
+
   const handleCards = () => {
-    showCards1(false);
-    showCards2(true);
+    if (cards1 === true) {
+      let food = {
+        chapatiQuantity: chapati,
+        riceQuantity: rice,
+        dalQuantity: dal,
+        vegetablesQuantity: vegetables,
+        others: others,
+      };
+      setFood1(food);
+      showCards1(false);
+      showCards2(true);
+    }
+
+    if (cards2 === true) {
+      let food2 = {
+        isRaw: raw,
+        isCooked: cooked,
+        isVeg: veg,
+        isNonVeg: nonveg,
+      };
+      setFood2(food2);
+      showCards2(false);
+      showCards3(true);
+    }
+
+    if (cards3 === true) {
+      showCards3(false);
+      // get user id
+      let users = localStorage.getItem("users");
+      users = JSON.parse(users);
+      console.log("users: ", users);
+      let userId = users._id;
+      console.log("userId: ", userId);
+      let data = {
+        ...food1,
+        ...food2,
+        currentLocation: address,
+        userId: userId,
+      };
+      axios.post(`http://localhost:8800/api/orders/`, data);
+      navigate("/");
+    }
   };
   return (
     <>
@@ -90,13 +187,18 @@ export default function Donate() {
                 </Cards1>
               )}
 
-              {cards2 && <DonateCards2 />}
-              <ButtonStyle
-                onClick={() => {
-                  handleCards();
-                }}
-              >
-                {cards2 ? "Submit" : "Next"}
+              {cards2 && (
+                <DonateCards2
+                  setRaw={setRaw}
+                  setCooked={setCooked}
+                  setVeg={setVeg}
+                  setNonveg={setNonveg}
+                />
+              )}
+
+              {cards3 && <DonateCards3 getLocation={getLocation} />}
+              <ButtonStyle onClick={handleCards}>
+                {cards3 ? "Submit" : "Next"}
               </ButtonStyle>
             </div>
           </Content>
@@ -133,7 +235,7 @@ const HeroSection = styled.div`
     bottom: 0;
     right: 0;
     z-index: 0;
-    animation: moveFromLeft 1s ease forwards 1.5s;
+    animation: moveFromLeft 1s ease forwards;
 
     @keyframes moveFromLeft {
       0% {
