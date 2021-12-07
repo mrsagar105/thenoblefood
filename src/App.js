@@ -5,6 +5,7 @@ import SignUp from "./components/SignUp";
 import Donate from "./pages/Donate";
 import Serve from "./pages/Serve";
 import Dashboard from "./pages/Dashboard";
+import OrderDetails from "./pages/OrderDetails";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/donate" element={<Donate />} />
         <Route path="/serve" element={<Serve />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/orderdetails" element={<OrderDetails />} />
       </Routes>
     </>
   );

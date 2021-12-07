@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import { Container } from "../styles/Container.styled";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import OrderDetails from "./OrderDetails";
 
 export default function Dashboard() {
   const [user, setUser] = useState({});
@@ -98,31 +100,33 @@ export default function Dashboard() {
 
               <Cards1>
                 {orders.map((order) => (
-                  <Card onClick={()}>
-                    <img src="images/vegetables.png" alt="" />
-                    <h3>
-                      Meals for 5 people by <span>{order.userId.name}</span>
-                    </h3>
-                    <FoodDetails>
-                      <div>
-                        <p>Chapati</p>
-                        <p>{order.chapatiQuantity}</p>
-                      </div>
-                      <div>
-                        <p>Rice</p>
-                        <p>{order.riceQuantity}kg</p>
-                      </div>
-                      <div>
-                        <p>Location</p>
-                        <Address>{order.currentLocation}</Address>
-                      </div>
-                    </FoodDetails>
-                    <BottomDetail>
-                      <p>{order.isRaw ? "Raw" : "Cooked"}</p>
-                      <p>7km</p>
-                      <p>{order.isVeg ? "Veg" : "NonVeg"}</p>
-                    </BottomDetail>
-                  </Card>
+                  <Link to="/orderdetails">
+                    <Card>
+                      <img src="images/vegetables.png" alt="" />
+                      <h3>
+                        Meals for 5 people by <span>{order.userId.name}</span>
+                      </h3>
+                      <FoodDetails>
+                        <div>
+                          <p>Chapati</p>
+                          <p>{order.chapatiQuantity}</p>
+                        </div>
+                        <div>
+                          <p>Rice</p>
+                          <p>{order.riceQuantity}kg</p>
+                        </div>
+                        <div>
+                          <p>Location</p>
+                          <Address>{order.currentLocation}</Address>
+                        </div>
+                      </FoodDetails>
+                      <BottomDetail>
+                        <p>{order.isRaw ? "Raw" : "Cooked"}</p>
+                        <p>7km</p>
+                        <p>{order.isVeg ? "Veg" : "NonVeg"}</p>
+                      </BottomDetail>
+                    </Card>
+                  </Link>
                 ))}
               </Cards1>
             </div>

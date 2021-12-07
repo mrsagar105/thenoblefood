@@ -37,7 +37,7 @@ export default function NavHome() {
             <Link to="/serve" href="#tools_and_skills">
               Serve People
             </Link>
-            <Link to="/" href="#contact">
+            <Link to="/dashboard" href="#contact">
               Dashboard
             </Link>
           </nav>
