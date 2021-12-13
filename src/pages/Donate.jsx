@@ -108,9 +108,12 @@ export default function Donate() {
         ...food1,
         ...food2,
         currentLocation: address,
+        latitude: lat,
+        longitude: lng,
         userId: userId,
       };
       axios.post(`https://hackathon-masai.herokuapp.com/orders/`, data);
+      alert("Donation posted successfully.");
       navigate("/");
     }
   };

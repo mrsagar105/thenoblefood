@@ -4,50 +4,11 @@ import Navbar from "../components/Navbar";
 import { Container } from "../styles/Container.styled";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Geocode from "react-geocode";
 
 export default function Serve() {
   const [user, setUser] = useState({});
 
-  const [location, setLocation] = useState(false);
-  const [lat, setLat] = useState(null);
-  const [lng, setLng] = useState(null);
-  const [distance, setDistance] = useState(0);
-  const [status, setStatus] = useState(null);
-
   const [orders, setOrders] = useState([]);
-
-  const getDistance = (lat, lon) => {
-    setDistance(5);
-  };
-
-  // function myDistance(lat1, lon1, lat2, lon2) {
-  //   let p = 0.017453292519943295;    // Math.PI / 180
-  //   let c = Math.cos;
-  //   let a = 0.5 - c((lat2 - lat1) * p)/2 +
-  //           c(lat1 * p) * c(lat2 * p) *
-  //           (1 - c((lon2 - lon1) * p))/2;
-
-  //   return 12742 * Math.asin(Math.sqrt(a));
-  // }
-
-  const getLocation = () => {
-    if (!navigator.geolocation) {
-      setStatus("Geolocation is not supported by your browser");
-    } else {
-      setStatus("Locating...");
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setStatus(null);
-          setLat(position.coords.latitude);
-          setLng(position.coords.longitude);
-        },
-        () => {
-          setStatus("Unable to retrieve your location");
-        }
-      );
-    }
-  };
 
   const fetchPosts = async (userId) => {
     const res = await axios.get("https://hackathon-masai.herokuapp.com/orders");
@@ -70,9 +31,9 @@ export default function Serve() {
   useEffect(() => {
     async function abc() {
       let id = await fetchUser();
-      getLocation();
+      // setUser(id._id);
+      // console.log("id._id: ", id._id);
       fetchPosts(id._id);
-      // getDistance();
     }
     abc();
   }, []);
@@ -106,7 +67,6 @@ export default function Serve() {
               <Cards1>
                 {orders.map((order) => (
                   <Card>
-                    {console.log(order)}
                     <img src="images/vegetables.png" alt="" />
                     <h3>
                       Meals for 5 people by <span>{order.userId.name}</span>
@@ -127,33 +87,7 @@ export default function Serve() {
                     </FoodDetails>
                     <BottomDetail>
                       <p>{order.isRaw ? "Raw" : "Cooked"}</p>
-                      <p>
-                        {
-                          // Math.PI / 180
-                          12742 *
-                            Math.asin(
-                              Math.sqrt(
-                                0.5 -
-                                  Math.cos(
-                                    (order.latitude - lat) *
-                                      0.017453292519943295
-                                  ) /
-                                    2 +
-                                  (Math.cos(lat * 0.017453292519943295) *
-                                    Math.cos(
-                                      order.latitude * 0.017453292519943295
-                                    ) *
-                                    (1 -
-                                      Math.cos(
-                                        (order.longitude - lng) *
-                                          0.017453292519943295
-                                      ))) /
-                                    2
-                              )
-                            )
-                        }{" "}
-                        km
-                      </p>
+                      <p>7km</p>
                       <p>{order.isVeg ? "Veg" : "NonVeg"}</p>
                     </BottomDetail>
                     <Link to="/dashboard">

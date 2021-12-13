@@ -8,6 +8,7 @@ import OrderDetails from "./OrderDetails";
 
 export default function Dashboard() {
   const [user, setUser] = useState({});
+  const [myId, setMyId] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +29,7 @@ export default function Dashboard() {
         "https://hackathon-masai.herokuapp.com/orders/"
       );
       setOrders(res.data);
-      console.log(res.data);
+      //localStorage.setItem("orders", JSON.stringify(res.data));
     };
     fetchPosts();
   }, []);
@@ -51,10 +52,19 @@ export default function Dashboard() {
       const res = await axios.get(
         `https://hackathon-masai.herokuapp.com/orders/user/${user._id}`
       );
-      setOrders(res.data);
-      console.log(res.data);
+
+      const newData = res.data.filter((order) => {
+        return order.isCompleted === false;
+      });
+      setOrders(newData);
+      console.log("newData: ", newData);
     };
     fetchPosts();
+  }
+
+  function handleOrderId(order) {
+    setMyId(order._id);
+    localStorage.setItem("orderId", JSON.stringify(order._id));
   }
 
   return (
@@ -100,7 +110,13 @@ export default function Dashboard() {
 
               <Cards1>
                 {orders.map((order) => (
-                  <Link to="/orderdetails">
+                  <Link
+                    to={`/orderdetails`}
+                    key={order._id}
+                    onClick={() => {
+                      handleOrderId(order);
+                    }}
+                  >
                     <Card>
                       <img src="images/vegetables.png" alt="" />
                       <h3>
