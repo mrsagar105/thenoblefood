@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Home from "../pages/Home";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Redirect } from "react-router-dom";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
 import Donate from "../pages/Donate";
 import Serve from "../pages/Serve";
 import Dashboard from "../pages/Dashboard";
 import OrderDetails from "../pages/OrderDetails";
+import PrivateRoute from './PrivateRouting';
 
 export default function Router() {
     return (
@@ -15,13 +16,24 @@ export default function Router() {
 
             <Routes>
                 <Route path="/" element={<Home />} />
+
                 <Route path="/:userId" element="Profile page" />
+
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/donate" element={<Donate />} />
-                <Route path="/serve" element={<Serve />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/orderdetails" element={<OrderDetails />} />
+
+                <Route path="/donate" element={<PrivateRoute> <Donate /></PrivateRoute>} />
+                <Route path="/serve" element={<PrivateRoute> <Serve /></PrivateRoute>} />
+                <Route path="/dashboard" element={<PrivateRoute> <Dashboard /></PrivateRoute>} />
+                <Route path="/orderdetails" element={<PrivateRoute> <OrderDetails /></PrivateRoute>} />
+
+
+                {/* <Route component={NotFound} /> */}
+
+                {/* <Route path='/404' component={NotFound} /> */}
+                {/* <Redirect from='*' to='/404' /> */}
+
+                {/* <Route exact path="*" render={() => (<Redirect to="/items" />)} /> */}
             </Routes>
 
 
