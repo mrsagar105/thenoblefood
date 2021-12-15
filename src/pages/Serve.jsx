@@ -54,7 +54,7 @@ export default function Serve() {
     let newData = res.data.filter((item) => {
       return item.isCompleted === false && userId !== item.userId._id;
     });
-
+    console.log(res.data);
     setOrders(newData);
   };
 
@@ -81,6 +81,7 @@ export default function Serve() {
     try {
       await axios.put(`https://hackathon-masai.herokuapp.com/orders/${id}`, {
         isCompleted: true,
+        servedBy: user._id,
       });
     } catch (err) {
       alert("Cannot Serve currently");
@@ -106,7 +107,6 @@ export default function Serve() {
               <Cards1>
                 {orders.map((order) => (
                   <Card>
-                    {console.log(order)}
                     <img src="images/vegetables.png" alt="" />
                     <h3>
                       Meals for 5 people by <span>{order.userId.name}</span>
@@ -130,27 +130,29 @@ export default function Serve() {
                       <p>
                         {
                           // Math.PI / 180
-                          12742 *
-                            Math.asin(
-                              Math.sqrt(
-                                0.5 -
-                                  Math.cos(
-                                    (order.latitude - lat) *
-                                      0.017453292519943295
-                                  ) /
-                                    2 +
-                                  (Math.cos(lat * 0.017453292519943295) *
+                          Math.round(
+                            12742 *
+                              Math.asin(
+                                Math.sqrt(
+                                  0.5 -
                                     Math.cos(
-                                      order.latitude * 0.017453292519943295
-                                    ) *
-                                    (1 -
+                                      (order.latitude - lat) *
+                                        0.017453292519943295
+                                    ) /
+                                      2 +
+                                    (Math.cos(lat * 0.017453292519943295) *
                                       Math.cos(
-                                        (order.longitude - lng) *
-                                          0.017453292519943295
-                                      ))) /
-                                    2
+                                        order.latitude * 0.017453292519943295
+                                      ) *
+                                      (1 -
+                                        Math.cos(
+                                          (order.longitude - lng) *
+                                            0.017453292519943295
+                                        ))) /
+                                      2
+                                )
                               )
-                            )
+                          )
                         }{" "}
                         km
                       </p>
